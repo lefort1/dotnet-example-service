@@ -13,7 +13,6 @@ namespace ExampleService.Tests
             _program = new Program();
         }
 
-        #region Sample_TestCode
         [Theory]
         [InlineData(-1)]
         [InlineData(0)]
@@ -24,7 +23,6 @@ namespace ExampleService.Tests
 
             Assert.False(result, $"{value} should not be prime");
         }
-        #endregion
 
         [Theory]
         [InlineData(2)]
