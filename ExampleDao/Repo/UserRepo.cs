@@ -19,9 +19,9 @@ namespace ExampleDao.Repo
             this._dbConnection = dbConnection;
         }
 
-        public IEnumerable<User> SelectAll()
+        public List<User> SelectAll()
         {
-            return WithConnection(connection => connection.Query<User>($"select * from {TableName}"));
+            return WithConnection(connection => connection.Query<User>($"select * from {TableName}")).ToList();
         }
 
         public User SelectById(int id)
@@ -31,20 +31,19 @@ namespace ExampleDao.Repo
                 .First();
         }
 
-        public void AddUser(User user)
+        public int AddUser(User user)
         {
-            String sqlStatement =
+            string sqlStatement =
                 $"Insert into {TableName} (FirstName, LastName, Email, Role) " +
-                $"values ({user.FirstName}, {user.LastName}, {user.Email}, {user.Role}";
+                $"values ('{user.FirstName}', '{user.LastName}', '{user.Email}', '{user.Role}')";
             
-            WithConnection(connection =>
-                connection.Query<User>(sqlStatement));
+            return WithConnection(connection => connection.Execute(sqlStatement));
         }
 
-        public void DeleteUserById(int id)
+        public int DeleteUserById(int id)
         {
             String sqlStatement = $"Delete * from {TableName} where EmployeeId = {id}";
-            WithConnection(connection => connection.Query(sqlStatement));
+            return WithConnection(connection => connection.Execute(sqlStatement));
         }
 
         private R WithConnection<R>(Func<IDbConnection, R> toRun)

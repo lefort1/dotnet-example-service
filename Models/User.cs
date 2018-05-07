@@ -12,6 +12,14 @@ namespace Models
         
         public User(){}
 
+        public User(string firstName, string lastName, string email, string role)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            Role = role;
+        }
+
         public User(int employeeId, string firstName, string lastName, string email, string role)
         {
             EmployeeId = employeeId;
